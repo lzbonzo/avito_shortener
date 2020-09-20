@@ -2,6 +2,9 @@
 # -*- coding: utf-8 -*-
 import hashlib
 from flask import Flask, render_template, request, redirect
+import settings
+from models import Urls
+from pony.orm import db_session
 
 
 app = Flask(__name__)
@@ -13,27 +16,33 @@ def html_doc():
 
 
 @app.route('/', methods=['POST'])
+@db_session
 def short():
     full_url = request.form.get('full_url')
-    short_url = shortener(full_url)
-    return {'short': short_url}
+    url = Urls.get(full_url=full_url)
+    if url is None:
+        short_url = shortener(full_url)
+        short_json = {'short': short_url}
+    else:
+        short_json = {'short': f'{settings.SERVER_URL}/{url.hashed_url}'}
+    return render_template('short.html', short_json=short_json)
 
 
 @app.route('/<hashed_url>', methods=['GET'])
-def redir(hashed_url):
-    if hashed_url in short_urls:
-        return redirect(short_urls[hashed_url])
+@db_session
+def redirect_url(hashed_url):
+    full_url = Urls.get(hashed_url=hashed_url)
+    return redirect(full_url.full_url)
 
 
+@db_session
 def shortener(url):
+    # TODO в full_url должен быть протокол
     hashed_url = hashlib.md5(url.encode()).hexdigest()[:8]
-    short_urls[hashed_url] = url
-    short_url = f'{SERVER_IP}/{hashed_url}'
+    Urls(hashed_url=hashed_url, full_url=url)
+    short_url = f'{settings.SERVER_URL}/{hashed_url}'
     return short_url
 
 
-SERVER_IP = 'http://127.0.0.1:5000'
-short_urls = {}
-
 if __name__ == '__main__':
-    app.run()
+    app.run(host=settings.SERVER_IP, port=settings.PORT)
