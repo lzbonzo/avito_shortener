@@ -51,6 +51,6 @@ def shortener(url):
 
 
 if __name__ == '__main__':
-    IP = settings.find_ip()
+    IP = '127.0.0.1'
     SERVER_URL = f'http://{IP}:{settings.PORT}'
     app.run(host=IP, port=settings.PORT)

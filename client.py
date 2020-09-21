@@ -24,5 +24,5 @@ def take_full_url():
 
 
 if __name__ == "__main__":
-    IP = settings.find_ip()
+    IP = '127.0.0.1'
     client.run(host=IP, port=settings.CLIENT_PORT)
