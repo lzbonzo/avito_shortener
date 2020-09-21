@@ -1,7 +1,9 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
 import requests
 from flask import Flask, render_template, request
 import settings
-
 
 client = Flask(__name__)
 
@@ -14,11 +16,13 @@ def html_doc():
 @client.route('/', methods=['POST'])
 def take_full_url():
     full_url = request.form.get('full_url').strip()
+    SERVER_URL = f'http://{IP}:{settings.PORT}'
     if full_url:
-        short_json = requests.post(settings.SERVER_URL, data={'full_url': full_url}).json()
+        short_json = requests.post(SERVER_URL, data={'full_url': full_url}).json()
         return render_template('short.html', short_json=short_json)
     return render_template('index.html')
 
 
 if __name__ == "__main__":
-    client.run(host=settings.CLIENT_IP, port=settings.CLIENT_PORT)
+    IP = settings.find_ip()
+    client.run(host=IP, port=settings.CLIENT_PORT)

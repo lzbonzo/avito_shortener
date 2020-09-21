@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
+
 import hashlib
 from flask import Flask, request, redirect
 import settings
@@ -7,13 +8,12 @@ from models import Urls
 from pony.orm import db_session
 import requests
 
-
 app = Flask(__name__)
 
 
 @app.route('/')
 def html_doc():
-    return {'response': 200}
+    return {'shortener': 'OK'}
 
 
 @app.route('/', methods=['POST'])
@@ -53,4 +53,6 @@ def shortener(url):
 
 
 if __name__ == '__main__':
-    app.run(host=settings.SERVER_IP, port=settings.PORT)
+    IP = settings.find_ip()
+    SERVER_URL = f'http://{IP}:{settings.PORT}'
+    app.run(host=IP, port=settings.PORT)
