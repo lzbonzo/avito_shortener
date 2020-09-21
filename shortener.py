@@ -5,6 +5,7 @@ from flask import Flask, request, redirect
 import settings
 from models import Urls
 from pony.orm import db_session
+import requests
 
 
 app = Flask(__name__)
@@ -18,7 +19,15 @@ def html_doc():
 @app.route('/', methods=['POST'])
 @db_session
 def short():
-    full_url = request.form.get('full_url')
+    full_url = request.form.get('full_url').strip().lower()
+    if not full_url.startswith('http'):
+        full_url = f'http://{full_url}'
+        try:
+            requests.get(full_url)
+            print(requests.get(full_url))
+        except Exception as err:
+            print(full_url, err)
+            return {'short': 'Указанный Вами ресурс недоступен'}
     url = Urls.get(full_url=full_url)
     if url is None:
         short_url = shortener(full_url)
@@ -37,7 +46,6 @@ def redirect_url(hashed_url):
 
 @db_session
 def shortener(url):
-    # TODO в full_url должен быть протокол
     hashed_url = hashlib.md5(url.encode()).hexdigest()[:8]
     Urls(hashed_url=hashed_url, full_url=url)
     short_url = f'{settings.SERVER_URL}/{hashed_url}'

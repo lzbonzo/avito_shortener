@@ -13,9 +13,11 @@ def html_doc():
 
 @client.route('/', methods=['POST'])
 def take_full_url():
-    full_url = request.form.get('full_url')
-    short_json = requests.post(settings.SERVER_URL, data={'full_url': full_url}).json()
-    return render_template('short.html', short_json=short_json)
+    full_url = request.form.get('full_url').strip()
+    if full_url:
+        short_json = requests.post(settings.SERVER_URL, data={'full_url': full_url}).json()
+        return render_template('short.html', short_json=short_json)
+    return render_template('index.html')
 
 
 if __name__ == "__main__":
