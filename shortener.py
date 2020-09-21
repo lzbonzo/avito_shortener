@@ -24,9 +24,7 @@ def short():
         full_url = f'http://{full_url}'
         try:
             requests.get(full_url)
-            print(requests.get(full_url))
         except Exception as err:
-            print(full_url, err)
             return {'short': 'Указанный Вами ресурс недоступен'}
     url = Urls.get(full_url=full_url)
     if url is None:
