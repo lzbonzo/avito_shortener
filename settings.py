@@ -1,6 +1,8 @@
 SERVER_IP = '127.0.0.1'
 PORT = '5000'
 SERVER_URL = f'http://{SERVER_IP}:{PORT}'
+CLIENT_IP = '127.0.0.1'
+CLIENT_PORT = '5050'
 
 DB_CONFIG = dict(
     provider='postgres',

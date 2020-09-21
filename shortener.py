@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 import hashlib
-from flask import Flask, render_template, request, redirect
+from flask import Flask, request, redirect
 import settings
 from models import Urls
 from pony.orm import db_session
@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def html_doc():
-    return render_template('index.html')
+    return {'response': 200}
 
 
 @app.route('/', methods=['POST'])
@@ -25,7 +25,7 @@ def short():
         short_json = {'short': short_url}
     else:
         short_json = {'short': f'{settings.SERVER_URL}/{url.hashed_url}'}
-    return render_template('short.html', short_json=short_json)
+    return short_json
 
 
 @app.route('/<hashed_url>', methods=['GET'])
