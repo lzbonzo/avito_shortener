@@ -22,10 +22,10 @@ def short():
     full_url = request.form.get('full_url').strip().lower()
     if not full_url.startswith('http'):
         full_url = f'http://{full_url}'
-        try:
-            requests.get(full_url)
-        except Exception:
-            return {'short': 'Указанный Вами ресурс недоступен'}
+    try:
+        requests.get(full_url)
+    except Exception:
+        return {'short': 'Указанный Вами ресурс недоступен'}
     url = Urls.get(full_url=full_url)
     if url is None:
         short_url = shortener(full_url)
