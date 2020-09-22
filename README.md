@@ -31,3 +31,7 @@ Step 5. Run scripts:
 $ sh venv.sh 
 
 $ sh shortener.sh
+
+
+Запущенный сервис можно посмотреть здесь:
+http://79.174.13.42:5050
