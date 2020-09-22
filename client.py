@@ -16,7 +16,7 @@ def html_doc():
 @client.route('/', methods=['POST'])
 def take_full_url():
     full_url = request.form.get('full_url').strip()
-    SERVER_URL = f'http://{IP}:{settings.PORT}'
+    SERVER_URL = f'http://{settings.SERVER_IP}:{settings.PORT}'
     if full_url:
         short_json = requests.post(SERVER_URL, data={'full_url': full_url}).json()
         return render_template('short.html', short_json=short_json)
