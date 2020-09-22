@@ -24,7 +24,7 @@ def short():
         full_url = f'http://{full_url}'
         try:
             requests.get(full_url)
-        except Exception as err:
+        except Exception:
             return {'short': 'Указанный Вами ресурс недоступен'}
     url = Urls.get(full_url=full_url)
     if url is None:
@@ -51,6 +51,4 @@ def shortener(url):
 
 
 if __name__ == '__main__':
-    IP = '127.0.0.1'
-    SERVER_URL = f'http://{IP}:{settings.PORT}'
-    app.run(host=IP, port=settings.PORT)
+    app.run(host=settings.SERVER_IP, port=settings.PORT)
