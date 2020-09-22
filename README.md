@@ -25,3 +25,6 @@ Run scripts:
 
 $ sh venv.sh
 $ sh shortener.sh 
+
+После запуска сервисом можно воспользоваться тут:
+http://localhost:5050
