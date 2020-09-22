@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 SERVER_IP = '127.0.0.1' # warning: choose your SERVER_IP
-PORT = '5000'
-SERVER_URL = f'http://{SERVER_IP}:{PORT}'
+SERVER_PORT = '5000'
+SERVER_URL = f'http://{SERVER_IP}:{SERVER_PORT}'
 CLIENT_IP = '127.0.0.1' # warning: choose your CLIENT_IP
 CLIENT_PORT = '5050'
 

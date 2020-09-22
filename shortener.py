@@ -51,4 +51,4 @@ def shortener(url):
 
 
 if __name__ == '__main__':
-    app.run(host=settings.SERVER_IP, port=settings.PORT)
+    app.run(host=settings.SERVER_IP, port=settings.SERVER_PORT)
