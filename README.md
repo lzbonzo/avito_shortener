@@ -5,7 +5,7 @@ AVITO SHORTENER
 Step 1.
 Clone repository:
 
-$ git clone https://github.com/lzbonzo/avito_shortener avito_shortener 
+$ git clone -b localhost https://github.com/lzbonzo/avito_shortener avito_shortener 
 $ cd avito_shortener
 
 Step 2.
